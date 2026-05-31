@@ -877,29 +877,31 @@ input:checked+.toggle-slider:before{transform:translateX(20px)}
         <div class="cloud-logo">
           <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
         </div>
-        <div class="cloud-title" data-ta="கிளவுட் பேக்கப்" data-en="Cloud Backup">கிளவுட் பேக்கப்</div>
-        <div class="cloud-sub" data-ta="உங்கள் தொலைபேசி எண்ணை உள்ளிடவும். OTP வழியாக உள்நுழைந்து உங்கள் தரவை எந்த தொலைபேசியிலும் மீட்டெடுக்கவும்." data-en="Enter your phone number. Login via OTP and restore your data on any phone.">Enter your phone number. Login via OTP and restore your data on any phone.</div>
+        <div class="cloud-title" data-ta="கிளவுட் பேக்கப்" data-en="Cloud Backup">Cloud Backup</div>
+        <div class="cloud-sub" data-ta="உங்கள் Email உள்ளிடவும். OTP வழியாக உள்நுழைந்து எந்த தொலைபேசியிலும் மீட்டெடுக்கவும்." data-en="Enter your email. Login via OTP — free, no Twilio needed.">Enter your email. A magic code will be sent to your inbox — free &amp; instant.</div>
 
-        <!-- Phone input -->
+        <!-- Email input step -->
         <div id="cloud-phone-step">
           <div class="cloud-phone-wrap">
             <div class="cloud-phone-row">
-              <span class="cloud-flag">🇮🇳</span>
-              <span class="cloud-code">+91</span>
-              <div style="width:1px;height:24px;background:var(--separator);flex-shrink:0"></div>
-              <input class="cloud-phone-inp" id="cloud-phone-inp" type="tel" inputmode="numeric" maxlength="10" placeholder="9876543210" oninput="cloudPhoneInput(this)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--label2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <input class="cloud-phone-inp" id="cloud-email-inp" type="email" inputmode="email" placeholder="your@email.com" oninput="cloudEmailInput(this)" style="letter-spacing:0">
             </div>
           </div>
           <div id="cloud-phone-status"></div>
           <button class="cloud-primary-btn" id="cloud-send-otp-btn" onclick="cloudSendOTP()" disabled>
-            <span data-ta="OTP அனுப்பு" data-en="Send OTP">Send OTP</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <span data-ta="OTP அனுப்பு" data-en="Send OTP to Email">Send OTP to Email</span>
           </button>
-          <div style="font-size:12px;color:var(--label2);text-align:center;margin-top:12px;line-height:1.5" data-ta="உங்கள் WhatsApp / SMS-க்கு 6 இலக்க OTP வரும்" data-en="A 6-digit OTP will be sent to your WhatsApp / SMS">A 6-digit OTP will be sent to your WhatsApp / SMS</div>
+          <div style="font-size:12px;color:var(--label2);text-align:center;margin-top:12px;line-height:1.5">
+            ✅ <b>Free</b> — no Twilio needed<br>
+            📧 6-digit code sent to your email inbox
+          </div>
         </div>
 
-        <!-- OTP input (hidden until OTP sent) -->
+        <!-- OTP input step -->
         <div id="cloud-otp-step" style="display:none;width:100%">
-          <div style="font-size:13px;color:var(--label2);text-align:center;margin-bottom:4px" id="cloud-otp-sent-label">OTP sent to +91 XXXXXXXXXX</div>
+          <div style="font-size:13px;color:var(--label2);text-align:center;margin-bottom:4px" id="cloud-otp-sent-label">Check your email for the 6-digit code</div>
           <div class="cloud-otp-row">
             <input class="cloud-otp-inp" id="otp0" type="tel" inputmode="numeric" maxlength="1" oninput="otpNext(this,0)" onkeydown="otpBack(event,0)">
             <input class="cloud-otp-inp" id="otp1" type="tel" inputmode="numeric" maxlength="1" oninput="otpNext(this,1)" onkeydown="otpBack(event,1)">
@@ -910,9 +912,9 @@ input:checked+.toggle-slider:before{transform:translateX(20px)}
           </div>
           <div id="cloud-otp-status"></div>
           <button class="cloud-primary-btn" id="cloud-verify-btn" onclick="cloudVerifyOTP()">
-            <span data-ta="உள்நுழை & பேக்கப்" data-en="Login & Backup">Login & Backup</span>
+            <span data-ta="உள்நுழை & பேக்கப்" data-en="✓ Verify & Backup">✓ Verify &amp; Backup</span>
           </button>
-          <button class="cloud-secondary-btn" onclick="cloudBackToPhone()">← <span data-ta="திரும்பு" data-en="Change number">Change number</span></button>
+          <button class="cloud-secondary-btn" onclick="cloudBackToPhone()">← <span data-ta="திரும்பு" data-en="Change email">Change email</span></button>
         </div>
 
       </div>
@@ -2178,9 +2180,9 @@ initSupabase();
     const ls = localStorage.getItem('emb_last_sync');
     const lsEl = document.getElementById('cloud-last-sync');
     if(ls && lsEl) lsEl.textContent = (localStorage.getItem('emb_lang')==='ta'?'கடைசி பேக்கப்: ':'Last backup: ') + ls;
-    const ph = localStorage.getItem('emb_cloud_phone');
+    const ph = localStorage.getItem('emb_cloud_email') || localStorage.getItem('emb_cloud_phone');
     if(ph) {
-      cloudUser = { phone: ph, id: 'demo-'+ph.replace(/\D/g,'') };
+      cloudUser = { email: ph, id: 'demo-' + ph.replace(/[^a-z0-9]/gi,'') };
       cloudUpdateUI();
     }
   } catch(e){}
@@ -2572,89 +2574,80 @@ function initSupabase() {
   } catch(e) { console.warn('Supabase init failed:', e); }
 }
 
-function cloudPhoneInput(inp) {
-  inp.value = inp.value.replace(/\D/g,'').slice(0,10);
-  document.getElementById('cloud-send-otp-btn').disabled = inp.value.length !== 10;
+function cloudEmailInput(inp) {
+  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value.trim());
+  document.getElementById('cloud-send-otp-btn').disabled = !valid;
 }
 
+// Keep old name so nothing breaks
+function cloudPhoneInput(inp) { cloudEmailInput(inp); }
+
 async function cloudSendOTP() {
-  const phone = document.getElementById('cloud-phone-inp').value.trim();
-  if(phone.length !== 10) return;
+  const email = (document.getElementById('cloud-email-inp') || {value:''}).value.trim();
+  if(!email) return;
   const btn = document.getElementById('cloud-send-otp-btn');
   const statusEl = document.getElementById('cloud-phone-status');
   btn.disabled = true;
-  btn.textContent = '⏳ Sending...';
-  statusEl.innerHTML = '';
-
-  if(!supaClient) {
-    // Demo mode — show OTP step without real auth
-    document.getElementById('cloud-phone-step').style.display = 'none';
-    document.getElementById('cloud-otp-step').style.display = 'block';
-    document.getElementById('cloud-otp-sent-label').textContent = `OTP sent to +91 ${phone}`;
-    document.getElementById('otp0').focus();
-    btn.disabled = false;
-    btn.textContent = 'Send OTP';
-    setCloudStatus(statusEl,'', '');
-    return;
-  }
+  btn.innerHTML = '⏳ Sending...';
 
   try {
-    const {error} = await supaClient.auth.signInWithOtp({
-      phone: '+91'+phone,
-      options:{ channel:'sms' }
-    });
-    if(error) throw error;
+    if(supaClient) {
+      const {error} = await supaClient.auth.signInWithOtp({
+        email: email,
+        options: { shouldCreateUser: true }
+      });
+      if(error) throw error;
+    } else {
+      await new Promise(r=>setTimeout(r,600));
+    }
     document.getElementById('cloud-phone-step').style.display = 'none';
     document.getElementById('cloud-otp-step').style.display = 'block';
-    document.getElementById('cloud-otp-sent-label').textContent = `OTP sent to +91 ${phone}`;
+    document.getElementById('cloud-otp-sent-label').textContent = 'Code sent to ' + email + ' — check inbox & spam';
     document.getElementById('otp0').focus();
+    try { localStorage.setItem('emb_cloud_email', email); } catch(e){}
   } catch(err) {
-    setCloudStatus(statusEl,'err','⚠️ '+( err.message||'Failed to send OTP'));
+    setCloudStatus(statusEl, 'err', '⚠️ ' + (err.message || 'Failed to send email'));
   }
   btn.disabled = false;
-  btn.textContent = 'Send OTP';
+  btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send OTP to Email';
 }
 
 async function cloudVerifyOTP() {
-  const otp = [0,1,2,3,4,5].map(i=>document.getElementById('otp'+i).value).join('');
-  const phone = document.getElementById('cloud-phone-inp').value.trim();
-  if(otp.length !== 6) { toast('⚠️ Enter full 6-digit OTP'); return; }
+  const otp = [0,1,2,3,4,5].map(i => document.getElementById('otp'+i).value).join('');
+  const email = try_get('emb_cloud_email') || '';
+  if(otp.length !== 6) { toast('⚠️ Enter full 6-digit code'); return; }
   const btn = document.getElementById('cloud-verify-btn');
   const statusEl = document.getElementById('cloud-otp-status');
   btn.disabled = true;
   btn.textContent = '⏳ Verifying...';
 
-  if(!supaClient) {
-    // Demo mode
-    cloudUser = { phone:'+91'+phone, id:'demo-'+phone };
-    try { localStorage.setItem('emb_cloud_phone', '+91'+phone); } catch(e){}
-    cloudUpdateUI();
-    cloudShowLoggedIn();
-    await cloudBackupNow();
-    btn.disabled = false; btn.textContent = 'Login & Backup';
-    return;
-  }
-
   try {
-    const {data,error} = await supaClient.auth.verifyOtp({
-      phone:'+91'+phone, token:otp, type:'sms'
-    });
-    if(error) throw error;
-    cloudUser = data.user;
+    if(supaClient) {
+      const {data, error} = await supaClient.auth.verifyOtp({
+        email: email, token: otp, type: 'email'
+      });
+      if(error) throw error;
+      cloudUser = data.user;
+    } else {
+      await new Promise(r=>setTimeout(r,600));
+      cloudUser = { email: email, id: 'demo-' + email };
+    }
+    try { localStorage.setItem('emb_cloud_email', email); } catch(e){}
     cloudUpdateUI();
     cloudShowLoggedIn();
     await cloudBackupNow();
   } catch(err) {
-    setCloudStatus(statusEl,'err','❌ '+(err.message||'Wrong OTP'));
+    setCloudStatus(statusEl, 'err', '❌ ' + (err.message || 'Wrong code — try again'));
   }
   btn.disabled = false;
-  btn.textContent = 'Login & Backup';
+  btn.textContent = '✓ Verify & Backup';
 }
 
 function cloudBackToPhone() {
   document.getElementById('cloud-otp-step').style.display = 'none';
   document.getElementById('cloud-phone-step').style.display = 'block';
   [0,1,2,3,4,5].forEach(i=>{ document.getElementById('otp'+i).value=''; });
+  document.getElementById('cloud-otp-status').innerHTML = '';
 }
 
 function cloudShowLoggedIn() {
@@ -2671,18 +2664,18 @@ function cloudUpdateUI() {
   const badge = document.getElementById('settings-cloud-badge');
   const sub = document.getElementById('settings-cloud-sub');
   if(cloudUser) {
-    const phone = cloudUser.phone || (try_get('emb_cloud_phone')) || 'Logged in';
+    const identity = cloudUser.email || cloudUser.phone || try_get('emb_cloud_email') || try_get('emb_cloud_phone') || 'Logged in';
     if(badge){ badge.className='cloud-badge'; badge.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> ON'; }
-    if(sub){ sub.setAttribute('data-ta','பேக்கப் இயக்கப்பட்டுள்ளது'); sub.setAttribute('data-en','Backup enabled — '+phone); sub.textContent='Backup enabled — '+phone; }
-    // show logged-in panel if on cloud screen
+    if(sub){ sub.textContent='Backup ON — '+identity; }
     if(document.getElementById('s-cloud-login').classList.contains('on')) cloudShowLoggedIn();
-    // update user phone display
-    const upEl = document.getElementById('cloud-user-phone'); if(upEl) upEl.textContent = phone;
-    // restore auto-backup pref
+    const upEl = document.getElementById('cloud-user-phone'); if(upEl) upEl.textContent = identity;
     try { const ab=localStorage.getItem('emb_auto_backup'); if(ab!==null){ autoBackupEnabled=ab==='1'; const tog=document.getElementById('auto-backup-toggle'); if(tog) tog.checked=autoBackupEnabled; cloudUpdateToggleUI(autoBackupEnabled);} } catch(e){}
+    const ls = try_get('emb_last_sync');
+    const lsEl = document.getElementById('cloud-last-sync');
+    if(ls && lsEl) lsEl.textContent = 'Last backup: ' + ls;
   } else {
     if(badge){ badge.className='cloud-badge off'; badge.textContent='OFF'; }
-    if(sub){ sub.setAttribute('data-ta','உள்நுழைந்து தரவை பாதுகாக்கவும்'); sub.setAttribute('data-en','Login to protect your data'); sub.textContent='Login to protect your data'; }
+    if(sub){ sub.textContent='Login to protect your data'; }
     if(document.getElementById('s-cloud-login').classList.contains('on')) cloudShowLoggedOut();
   }
 }
@@ -2709,9 +2702,10 @@ async function cloudBackupNow() {
   const statusEl = document.getElementById('cloud-action-status');
   if(iconEl) iconEl.classList.add('sync-pulse');
 
+  const identity = cloudUser.email || cloudUser.phone || try_get('emb_cloud_email') || try_get('emb_cloud_phone') || cloudUser.id;
   const payload = {
-    user_id: cloudUser.id || cloudUser.phone,
-    phone: cloudUser.phone || try_get('emb_cloud_phone') || '',
+    user_id: cloudUser.id || identity,
+    phone: identity,
     work_db: JSON.stringify(workDB),
     hist_db: JSON.stringify(histDB),
     lang: lang,
@@ -2759,7 +2753,7 @@ async function cloudRestoreNow() {
       const {data, error} = await supaClient
         .from('emb_backups')
         .select('*')
-        .eq('user_id', cloudUser.id || cloudUser.phone)
+        .eq('user_id', cloudUser.id || cloudUser.email || cloudUser.phone)
         .single();
       if(error) throw error;
       payload = data;
@@ -2795,12 +2789,12 @@ async function cloudLogout() {
     if(supaClient) await supaClient.auth.signOut();
   } catch(e){}
   cloudUser = null;
-  try { localStorage.removeItem('emb_cloud_phone'); } catch(e){}
+  try { localStorage.removeItem('emb_cloud_phone'); localStorage.removeItem('emb_cloud_email'); } catch(e){}
   cloudUpdateUI();
   cloudShowLoggedOut();
-  // Reset OTP form
   cloudBackToPhone();
-  document.getElementById('cloud-phone-inp').value = '';
+  const emailInp = document.getElementById('cloud-email-inp');
+  if(emailInp) emailInp.value = '';
   document.getElementById('cloud-send-otp-btn').disabled = true;
   toast(lang==='ta'?'வெளியேறியது':'Signed out');
 }
